@@ -13,3 +13,9 @@ class SubsetWithTransform(Dataset):
     def __getitem__(self, i):
         img, label = self.base_ds[self.indices[i]]
         return self.transform(img), label
+    
+def get_train_transform():
+    pass
+
+def get_val_tranform():
+    pass
