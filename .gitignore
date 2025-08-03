@@ -4,9 +4,7 @@ LEGO_brick_images_v1/
 resources/
 
 venv/
-
 temp/
-
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

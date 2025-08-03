@@ -4,6 +4,7 @@ import data
 import models as models
 
 import torch.nn as nn
+import fileio
 
 def train_one_epoch(model, loader, criterion, optimizer, device):
     model.train()
@@ -39,9 +40,14 @@ def run_training(data_dir, epochs, batch_size, lr):
         train_loss, train_acc = train_one_epoch(model, train_loader, criterion, optimizer, device)
         val_loss, val_acc = ev.validate_one_epoch(model, test_loader, criterion, device)
         
-        print(f"Epoch {epoch}: train {train_loss:.3f}/{train_acc:.3f}, "
-              f"val {val_loss:.3f}/{val_acc:.3f}")
+        print(f"Epoch {epoch:2d} | "
+          f"Train loss {train_loss:.4f}, acc {train_acc:.4f} | "
+          f"Val   loss {val_loss:.4f}, acc {val_acc:.4f}")
         
         if val_loss < best_val_loss:
             best_val_loss = val_loss
-            torch.save(model.state_dict(), "best_resnet18.pth")
+
+            model_name = model.__class__.__name__.lower()
+            run_dir = fileio.make_run_dir(model_name)
+            fileio.save_best_model(model, run_dir)
+            

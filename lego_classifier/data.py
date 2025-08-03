@@ -1,7 +1,7 @@
 from pathlib import Path
 from torchvision.datasets import ImageFolder
 from torch.utils.data import random_split, DataLoader
-from dataset import SubsetWithTransform
+import dataset
 from transforms import get_train_transform, get_val_transform
 
 import torch
@@ -24,10 +24,10 @@ def get_dataloaders(
         generator=torch.Generator().manual_seed(seed),
     )
 
-    train_ds = SubsetWithTransform(base_ds, train_idx, get_train_transform())
-    val_ds   = SubsetWithTransform(base_ds, val_idx, get_val_transform())
+    train_ds = dataset.SubsetWithTransform(base_ds, train_idx, get_train_transform())
+    val_ds = dataset.SubsetWithTransform(base_ds, val_idx, get_val_transform())
 
     train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True,  num_workers=num_workers)
-    val_loader   = DataLoader(val_ds, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, num_workers=num_workers)
 
     return train_loader, val_loader, base_ds.classes

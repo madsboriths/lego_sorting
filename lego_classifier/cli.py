@@ -4,6 +4,7 @@ import typer
 
 import torch
 import training as tr
+import inference
 
 app = typer.Typer()
     
@@ -20,8 +21,8 @@ def train(
     tr.run_training(data_dir, epochs, batch_size, lr)
 
 @app.command()
-def dull():
-    pass
+def run_classification(data_dir: Path = typer.Option("./data/LEGO_brick_images_v1", "--data-dir", "-d", help="Path to resources")):
+    inference.run_inference()
 
 if __name__ == "__main__":
     app()
