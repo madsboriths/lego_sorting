@@ -27,7 +27,6 @@ def train_one_epoch(model, loader, criterion, optimizer, device):
     return avg_loss, avg_acc
 
 def run_training(data_dir, epochs, batch_size, lr):
-
     base_ds = data_preparation.make_dataset(data_dir)
 
     train_loader, test_loader = data_preparation.get_dataloaders(base_ds, batch_size)

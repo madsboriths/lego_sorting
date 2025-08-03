@@ -17,3 +17,7 @@ def get_val_transform():
         transforms.ToTensor(),
         transforms.Normalize([0.5], [0.5])
     ])
+
+def center_block_transform():
+    return transforms.Compose([
+        transforms.Grayscale(num_output_channels=3)]) 

@@ -5,6 +5,8 @@ import typer
 import training as tr
 import inference
 
+from typing import List
+
 app = typer.Typer()
     
 @app.command(name="train")
@@ -21,9 +23,9 @@ def train(
 
 @app.command(name="run-inference")
 def run_inference(
-    data_dir: Path = typer.Option("./data/inference", "--data-dir", "-d", help="Path to resources")):
-    
-    inference.run_inference(data_dir)
+    paths: List[Path] = typer.Argument(..., help="Paths to resources")):
+
+    inference.run_inference(paths)
 
 if __name__ == "__main__":
     app()

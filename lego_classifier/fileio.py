@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 
 TRAINED_MODELS_DIR = "trained_models"
+BEST_MODEL_FILE_NAME = "best.pth"
 
 def make_run_dir(model_name: str) -> str:
     ts = datetime.now().strftime("%Y-%d-%m_%H-%M")
