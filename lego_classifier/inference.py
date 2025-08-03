@@ -17,5 +17,3 @@ def run_inference(paths, model_path = f"{fileio.TRAINED_MODELS_DIR}/resnet_2025-
     classes = class_to_idx.keys()
     model = models.load_model(model_path, classes)
     model.eval()
-
-    data_preparation.preprocess_images
