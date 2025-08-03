@@ -1,7 +1,8 @@
 import torch
 import validate as ev
-import data
+import data_preparation
 import models as models
+
 
 import torch.nn as nn
 import fileio
@@ -26,9 +27,12 @@ def train_one_epoch(model, loader, criterion, optimizer, device):
     return avg_loss, avg_acc
 
 def run_training(data_dir, epochs, batch_size, lr):
-    train_loader, test_loader, classes = data.get_dataloaders(data_dir=data_dir, batch_size=batch_size)
 
-    model = models.build_model(classes)
+    base_ds = data_preparation.make_dataset(data_dir)
+
+    train_loader, test_loader = data_preparation.get_dataloaders(base_ds, batch_size)
+
+    model = models.build_model(base_ds.classes)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

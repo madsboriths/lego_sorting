@@ -10,7 +10,7 @@ import models
 def run_inference():
     with open("class_to_idx.json") as f:
         class_to_idx = json.load(f)
-
+    
     model = models.build_model()
     model.load_state_dict(torch.load('best_resnet18.pth'))
     model.eval()

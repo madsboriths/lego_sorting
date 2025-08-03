@@ -1,14 +1,13 @@
 from pathlib import Path
-import data as data
+import data_preparation
 import typer
 
-import torch
 import training as tr
 import inference
 
 app = typer.Typer()
     
-@app.command()
+@app.command(name="train")
 def train(
     data_dir: Path = typer.Option("./data/LEGO_brick_images_v1", "--data-dir", "-d", help="Path to data directory"),
     epochs: int = typer.Option(10, "--epochs", "-e", help="Number of training epochs"),
@@ -20,9 +19,11 @@ def train(
 
     tr.run_training(data_dir, epochs, batch_size, lr)
 
-@app.command()
-def run_classification(data_dir: Path = typer.Option("./data/LEGO_brick_images_v1", "--data-dir", "-d", help="Path to resources")):
-    inference.run_inference()
+@app.command(name="run-inference")
+def run_inference(
+    data_dir: Path = typer.Option("./data/inference", "--data-dir", "-d", help="Path to resources")):
+    
+    inference.run_inference(data_dir)
 
 if __name__ == "__main__":
     app()
