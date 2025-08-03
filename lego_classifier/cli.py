@@ -17,7 +17,6 @@ def train(
     print(f"Training with data from {data_dir}, "
           f"for {epochs} epochs, batch size {batch_size}, learning rate {lr}")
 
-    # train epochs
     tr.run_training(data_dir, epochs, batch_size, lr)
 
 @app.command()

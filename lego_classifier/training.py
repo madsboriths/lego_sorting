@@ -25,10 +25,8 @@ def train_one_epoch(model, loader, criterion, optimizer, device):
     return avg_loss, avg_acc
 
 def run_training(data_dir, epochs, batch_size, lr):
-    # Load data
     train_loader, test_loader, classes = data.get_dataloaders(data_dir=data_dir, batch_size=batch_size)
 
-    # Build model
     model = models.build_model(classes)
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
