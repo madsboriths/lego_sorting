@@ -1,5 +1,4 @@
 from torch.utils.data import Dataset
-from PIL import Image
 
 class SubsetWithTransform(Dataset):
     def __init__(self, base_ds, indices, transform):

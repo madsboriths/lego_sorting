@@ -1,9 +1,9 @@
 from pathlib import Path
-import data_preparation
 import typer
 
-import training as tr
-import inference
+import lego_classifier.training as tr
+import lego_classifier.data_handling as data_handling
+import lego_classifier.inference as inference
 
 from typing import List
 
@@ -16,8 +16,8 @@ def train(
     batch_size: int = typer.Option(32, "--batch", "-b", help="Batch size"),
     lr: float = typer.Option(1e-3, "--lr", help="Learning rate")):
 
-    print(f"Training with data from {data_dir}, "
-          f"for {epochs} epochs, batch size {batch_size}, learning rate {lr}")
+    typer.echo(f"Training with data from {data_dir}, "
+               f"for {epochs} epochs, batch size {batch_size}, learning rate {lr}")
 
     tr.run_training(data_dir, epochs, batch_size, lr)
 
@@ -25,7 +25,8 @@ def train(
 def run_inference(
     paths: List[Path] = typer.Argument(..., help="Paths to resources")):
 
-    inference.run_inference(paths)
-
+    typer.echo(f"Running inference on {len(paths)} images")
+    results = inference.run_inference_on_image_collection(paths)
+    
 if __name__ == "__main__":
     app()
