@@ -23,6 +23,10 @@ def get_dataloaders_from_ImageFolder(
     seed: int = 42,
     num_workers: int = 4):
 
+    """
+    Handles specificifally the case of a folder structure where subfolder names are class names.
+    """
+
     train_size = int((1 - val_ratio) * len(base_ds))
     val_size   = len(base_ds) - train_size
 
@@ -32,21 +36,25 @@ def get_dataloaders_from_ImageFolder(
         generator=torch.Generator().manual_seed(seed),
     )
 
-    train_ds = lego_dataset.SubsetWithTransform(base_ds, train_idx, get_train_transform())
-    val_ds = lego_dataset.SubsetWithTransform(base_ds, val_idx, get_val_transform())
+    train_dataset = lego_dataset.SubsetWithTransform(base_ds, train_idx, get_train_transform())
+    validation_dataset = lego_dataset.SubsetWithTransform(base_ds, val_idx, get_val_transform())
 
-    train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True, num_workers=num_workers)
-    val_loader = DataLoader(val_ds, batch_size=batch_size, shuffle=False, num_workers=num_workers)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=num_workers)
+    validation_loader = DataLoader(validation_dataset, batch_size=batch_size, shuffle=False, num_workers=num_workers)
 
-    return train_loader, val_loader
+    return train_loader, validation_loader
 
-def get_dataloaders_from_images():
-    pass
+def get_dataloader_from_images(images: list[Image.Image]):
+    """
+    Handles the case of a list of images (no labels)
+    """
+    dataset = lego_dataset.WithTransforms(images, transforms.get_val_transform())
+    return DataLoader(dataset, BATCH_SIZE, shuffle=False)     
 
-def make_dataset(data_dir):
+def make_dataset_from_folder(data_dir):
     return ImageFolder(str(data_dir), transform=None)
 
-def preprocess_image_collection(paths):
+def make_dataset_from_images(images: List[Path]):
     pass
 
 def preprocess_image(img_path):

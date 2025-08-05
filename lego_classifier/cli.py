@@ -24,9 +24,10 @@ def train(
 @app.command(name="run-inference")
 def run_inference(
     paths: List[Path] = typer.Argument(..., help="Paths to resources")):
+    # true_labels: List[Path] = typer.Option(None,"--true-labels", "-tl", help="List of true labels (optional)")
 
-    typer.echo(f"Running inference on {len(paths)} images")
     results = inference.run_inference_on_image_collection(paths)
+    typer.echo(results)
     
 if __name__ == "__main__":
     app()

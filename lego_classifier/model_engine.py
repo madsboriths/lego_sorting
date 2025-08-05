@@ -35,3 +35,13 @@ def validate_one_epoch(model, loader, criterion, device):
     avg_loss = total_loss / len(loader.dataset)
     avg_acc  = total_correct / len(loader.dataset)
     return avg_loss, avg_acc
+
+def predict_images(model, loader, device):
+    model.eval()
+    predictions = []
+    with torch.no_grad():
+        for images in loader:
+            images = images.to(device)
+            preds = model(images)
+            predictions.extend(preds.argmax(1).cpu().numpy())
+    return predictions

@@ -12,7 +12,7 @@ def run_training(data_dir, epochs, batch_size, lr):
     parameters:
       data_dir (str): training data directory. Subfolder names are assumed to be classnames.
     """
-    dataset_ImageFolder = data_handling.make_dataset(data_dir)
+    dataset_ImageFolder = data_handling.make_dataset_from_folder(data_dir)
     train_loader, test_loader = data_handling.get_dataloaders_from_ImageFolder(dataset_ImageFolder)
 
     model = models.build_model(dataset_ImageFolder.classes)
