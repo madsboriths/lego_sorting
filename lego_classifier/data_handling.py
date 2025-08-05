@@ -10,6 +10,8 @@ from PIL import Image
 
 import torch
 
+import typer
+
 from pathlib import Path
 from typing import List, Set
 
@@ -67,6 +69,9 @@ def preprocess_image(img_path):
 def split_into_batches(list, n=BATCH_SIZE):
     for i in range(0, len(list), n):
         yield list[i : i + n]
+
+def clean_input(paths):
+    pass
         
 def unpack_paths(paths: List[Path]) -> List[Path]:
     seen: Set[Path] = set()
